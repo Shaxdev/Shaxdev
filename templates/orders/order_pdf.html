@@ -1,0 +1,100 @@
+{% load static %}
+<link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+
+<!-- jQuery -->
+<script src="{% static 'js/jquery-2.0.0.min.js' %}" type="text/javascript"></script>
+
+<!-- Bootstrap4 files-->
+<script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+
+<!-- actions which is in the cart -->
+<script src="{% static 'js/cart.js' %}" type="text/javascript"></script>
+
+<!-- Font awesome 5 -->
+<link href="{% static 'fonts/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet">
+
+{% comment %} Black view {% endcomment %}
+{% comment %} <link href="{% static 'css/color.css' %}" rel="stylesheet" type="text/css"/>
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"/> {% endcomment %}
+
+<!-- custom style -->
+<link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css"/>
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css" />
+
+<!-- custom javascript -->
+<script src="{% static 'js/script.js' %}" type="text/javascript"></script>
+
+<article class="card mb-4">
+    <header class="card-header">
+        <strong class="d-inline-block mr-3">Order ID: {{ order.id }}</strong>
+        <span>Ordered at: {{ order.ordered_at }}</span><br>
+        <strong class="d-inline-block mr-3">Order Status: {{ order.status }}</strong>
+    </header>
+    <table class="table caption-top">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                
+                <td>
+                    <div class="col-md-8">
+                        <h6 class="text-muted">Delivery to</h6>
+                        <p>{{ order.first_name }} {{ order.last_name }} <br>  
+                        Phone: {{ order.phone }} Email: {{ order.email }} <br>
+                        Location: {{ order.country }}, {{ order.city }}, {{ order.street }}, {{ order.building }}, {{ order.floor }}, {{ building.apartment }} <br> 
+                        Zip: {{ order.zip }}
+                        </p>
+                    </div>
+                </td>   
+                    
+                <td>
+                    <h6>Payment</h6>
+                    <span>Visa  **** 4216</span>  
+                    <p>Subtotal: $356 <br>
+                    Shipping fee:  $56 <br> 
+                    <span class="b">Total:  $456 </span>
+                    </p>
+                </td>
+                
+            </tr>
+        </tbody>
+    </table><br><br><br>
+    <div class="table-responsive">
+        
+            <table class="table caption-top">
+                <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        {% if item.item_status != 'All_of_good' %}
+                            {% if item.item_status != ''%}
+                                <th scope="col">Status</th>
+                                <th scope="col">{{ item.item_status }}  date&time</th>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                </thead>
+                {% for item in order_items %}
+                    <tbody>
+                        <tr>
+                            <th scope="row">{{ item.product }}</th>
+                            <td><img height='80px' with='55px' src = '{{ item.product.image.path }}'</td>
+                            <td>{{ item.product.price }}</td>
+                            <th>{{ item.quantity }}</th>
+                            {% if item.item_status != 'All_of_good'%}
+                                <th>{{ item.item_status }}</th>
+                                <th>{{ item.updated_at }}</th>
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+    </div> <!-- table-responsive .end// --> 
+</article> <!-- card order-item .// -->
